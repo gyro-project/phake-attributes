@@ -1,0 +1,14 @@
+{
+    "name": "gyro/phake-attributes",
+    "autoload": {
+        "psr-4": {
+            "Gyro\\PhakeAttributes\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phake/phake": "^4.2"
+    },
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
