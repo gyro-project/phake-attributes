@@ -1,5 +1,7 @@
 {
     "name": "gyro/phake-attributes",
+    "description": "A #[Mock] attribute for Phake inside PHPUnit and helpers.",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Gyro\\PhakeAttributes\\": "src/"
