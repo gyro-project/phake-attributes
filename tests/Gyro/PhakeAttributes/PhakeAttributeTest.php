@@ -2,6 +2,7 @@
 
 namespace Gyro\PhakeAttributes;
 
+use Phake\IMock;
 use PHPUnit\Framework\TestCase;
 
 class PhakeAttributeTest extends TestCase
@@ -12,9 +13,22 @@ class PhakeAttributeTest extends TestCase
     public Foo $foo;
     #[Mock]
     public Bar $bar;
+    /* Intentionally without attribute */
+    public ?Baz $baz = null;
 
     #[Mock]
     public \Countable|\Iterator $unionType;
+
+    public function testMockAttribute() : void
+    {
+        $this->assertInstanceOf(IMock::class, $this->foo);
+        $this->assertInstanceOf(IMock::class, $this->bar);
+
+        $this->assertInstanceOf(Foo::class, $this->foo);
+        $this->assertInstanceOf(Bar::class, $this->bar);
+
+        $this->assertNull($this->baz);
+    }
 
     public function testMockArgumentsFor() : void
     {
