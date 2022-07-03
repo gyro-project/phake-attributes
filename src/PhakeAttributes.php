@@ -22,7 +22,7 @@ trait PhakeAttributes
                 if ($type instanceof \ReflectionNamedType) {
                     $mock = \Phake::mock($type->getName());
                     $this->knownPhakeMockedProperties[$reflectionProperty->getName()] = $mock;
-                    
+
                     $reflectionProperty->setAccessible(true);
                     $reflectionProperty->setValue($this, $mock);
                 } else if ($type instanceof \ReflectionIntersectionType || $type instanceof \ReflectionUnionType) {
@@ -37,6 +37,11 @@ trait PhakeAttributes
 
                     $reflectionProperty->setAccessible(true);
                     $reflectionProperty->setValue($this, $mock);
+                } else {
+                    throw new \RuntimeException(sprintf(
+                        'Cannot #[Mock] property %s with no or wrong types.',
+                        $reflectionProperty->getName()
+                    ));
                 }
             }
         }
@@ -63,7 +68,8 @@ trait PhakeAttributes
 
             if ($reflectionParameter->hasType()) {
                 foreach ($this->knownPhakeMockedProperties as $name => $mock) {
-                    if ($reflectionParameter->getType()->getName() === get_parent_class($mock)) {
+                    if ($reflectionParameter->getType()->getName() === get_parent_class($mock) ||
+                        in_array($reflectionParameter->getType()->getName(), class_implements($mock))) {
                         $arguments[$paramName] = $mock;
                         break;
                     }

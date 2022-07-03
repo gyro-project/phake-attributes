@@ -59,7 +59,7 @@ class Foo
 {
 }
 
-class Bar
+interface Bar
 {
 
 }
