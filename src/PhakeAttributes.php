@@ -2,13 +2,13 @@
 
 namespace Gyro\PhakeAttributes;
 
+use PHPUnit\Framework\Attributes\Before;
+
 trait PhakeAttributes
 {
     private array $knownPhakeMockedProperties = [];
 
-    /**
-     * @before
-     */
+    #[Before]
     public function initializePhakeMocks() : void
     {
         $reflection = new \ReflectionObject($this);
