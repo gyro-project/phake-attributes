@@ -47,11 +47,11 @@ trait PhakeAttributes
         }
     }
 
-    /**
-     * @template T
-     * @psalm-param class-string<T> $className
-     * @return T
-     */
+   /**
+    * @template T of object
+    * @param class-string<T> $className
+    * @return T
+    */
     protected function newInstanceWithMockedArgumentsFor(string $className) : object
     {
         return new $className(...$this->mockArgumentsFor($className));
