@@ -23,7 +23,9 @@ trait PhakeAttributes
                     $mock = \Phake::mock($type->getName());
                     $this->knownPhakeMockedProperties[$reflectionProperty->getName()] = $mock;
 
-                    $reflectionProperty->setAccessible(true);
+                    if (\PHP_VERSION_ID < 80100) {
+                        $reflectionProperty->setAccessible(true);
+                    }
                     $reflectionProperty->setValue($this, $mock);
                 } else if ($type instanceof \ReflectionIntersectionType || $type instanceof \ReflectionUnionType) {
                     $interfaces = [];
@@ -35,7 +37,9 @@ trait PhakeAttributes
                     $mock = \Phake::mock($interfaces);
                     $this->knownPhakeMockedProperties[$reflectionProperty->getName()] = $mock;
 
-                    $reflectionProperty->setAccessible(true);
+                    if (\PHP_VERSION_ID < 80100) {
+                        $reflectionProperty->setAccessible(true);
+                    }
                     $reflectionProperty->setValue($this, $mock);
                 } else {
                     throw new \RuntimeException(sprintf(
